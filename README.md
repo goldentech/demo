@@ -1,4 +1,4 @@
 #DEMO
 
 ##fight
-[Link](https://www.github.com)
+[Link](http://goldentech.github.io/demo/fight/release/html5/173552/)
