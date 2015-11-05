@@ -1,0 +1,35 @@
+{
+	"resources": [
+		{
+			"name": "bgImage",
+			"type": "image",
+			"url": "assets/bg.jpg"
+		},
+		{
+			"name": "egretIcon",
+			"type": "image",
+			"url": "assets/egret_icon.png"
+		},
+		{
+			"name": "description",
+			"type": "json",
+			"url": "config/description.json"
+		},
+		{
+			"name": "sword",
+			"type": "image",
+			"url": "assets/sword.png"
+		},
+		{
+			"name": "monster",
+			"type": "image",
+			"url": "assets/monster.png"
+		}
+	],
+	"groups": [
+		{
+			"name": "obj",
+			"keys": "monster,sword"
+		}
+	]
+}
