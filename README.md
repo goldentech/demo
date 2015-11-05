@@ -1,4 +1,4 @@
 ##DEMO
 
 #fight
-[demo](https://www.github.com)
+[Link](https://www.github.com)
