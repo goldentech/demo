@@ -102,15 +102,24 @@ var Main = (function (_super) {
         monster.x = 350;
         monster.y = 100;
         this.addChild(monster);
+        // add monster2 to scene
+        var monster2 = new egret.Bitmap(RES.getRes("monster2"));
+        monster2.x = 200;
+        monster2.y = 300;
+        this.addChild(monster2);
         // add sword to scene
         var sword = new egret.Bitmap(RES.getRes("sword"));
         sword.x = 50;
-        sword.y = 140;
+        sword.y = 150;
         this.addChild(sword);
         // touch event
         monster.touchEnabled = true;
         monster.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
-            egret.Tween.get(sword).to({ x: 250 }, 350).to({ x: 50 }, 350);
+            egret.Tween.get(sword).to({ x: 250 }, 30).to({ x: 50 }, 350);
+        }, this);
+        monster2.touchEnabled = true;
+        monster2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            egret.Tween.get(sword).to({ x: 250, y: 340, rotation: 35 }, 30).to({ x: 50, y: 150, rotation: 0 }, 350);
         }, this);
     };
     return Main;

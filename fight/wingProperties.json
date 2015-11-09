@@ -31,6 +31,11 @@
 				"isFolder":false,
 				"key":"sword",
 				"name":"sword"
+			},
+			{
+				"isFolder":false,
+				"key":"monster2",
+				"name":"monster2"
 			}]
 		}
 	},
