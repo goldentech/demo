@@ -133,10 +133,14 @@ class Main extends egret.DisplayObjectContainer {
         
         // touch event
         monster.touchEnabled = true;
-        monster.addEventListener(egret.TouchEvent.TOUCH_TAP,function() { egret.Tween.get(sword).to({ x: 250 },30).to({ x: 50 },350);},this);   
-    
+        // Monster: change alpha filter and size when under attack, sword: move while touching monster
+        monster.addEventListener(egret.TouchEvent.TOUCH_TAP,function() { egret.Tween.get(sword).to({ x: 250 },30).to({ x: 50 },350); },this);   
+        monster.addEventListener(egret.TouchEvent.TOUCH_TAP,function() { egret.Tween.get(monster).to({scaleX: .95, scaleY: .95, alpha:.2}, 250, egret.Ease.circIn).to({scaleX: 1, scaleY: 1, alpha: 1}, 250, egret.Ease.circIn); },this);  
+        
         monster2.touchEnabled = true;
-        monster2.addEventListener(egret.TouchEvent.TOUCH_TAP,function() { egret.Tween.get(sword).to({ x: 250, y:340, rotation: 35 },30).to({ x: 50, y:150, rotation:0 },350);},this);      
+        monster2.addEventListener(egret.TouchEvent.TOUCH_TAP,function() { egret.Tween.get(sword).to({ x: 250, y:340, rotation: 35 },30).to({ x: 50, y:150, rotation:0 },350);},this);     
+        monster2.addEventListener(egret.TouchEvent.TOUCH_TAP,function() { egret.Tween.get(monster2).to({scaleX: .95, scaleY: .95, alpha:.2}, 250, egret.Ease.circIn).to({scaleX: 1, scaleY: 1, alpha: 1}, 250, egret.Ease.circIn); },this);  
+        
     }
 }
 
