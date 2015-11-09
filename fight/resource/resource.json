@@ -24,12 +24,17 @@
 			"name": "monster",
 			"type": "image",
 			"url": "assets/monster.png"
+		},
+		{
+			"name": "monster2",
+			"type": "image",
+			"url": "assets/monster2.png"
 		}
 	],
 	"groups": [
 		{
 			"name": "obj",
-			"keys": "monster,sword"
+			"keys": "monster,sword, monster2"
 		}
 	]
 }
