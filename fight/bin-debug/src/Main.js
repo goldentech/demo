@@ -92,6 +92,7 @@ var Main = (function (_super) {
      * Create a game scene
      */
     __egretProto__.createGameScene = function () {
+        this.hits = 0;
         var bg = new egret.Shape;
         bg.graphics.beginFill(0x336699);
         bg.graphics.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight);
@@ -126,10 +127,16 @@ var Main = (function (_super) {
             egret.Tween.get(sword).to({ x: 250, y: 340, rotation: 35 }, 30).to({ x: 50, y: 150, rotation: 0 }, 350);
         }, this);
         monster2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            this.hits++;
+            // when hits equal to 4, monster disappear
+            if (this.hits == 4) {
+                this.hits = 0;
+                this.removeChild(monster2);
+                return;
+            }
             egret.Tween.get(monster2).to({ scaleX: .95, scaleY: .95, alpha: .2 }, 250, egret.Ease.circIn).to({ scaleX: 1, scaleY: 1, alpha: 1 }, 250, egret.Ease.circIn);
         }, this);
     };
     return Main;
 })(egret.DisplayObjectContainer);
 Main.prototype.__class__ = "Main";
-//# sourceMappingURL=Main.js.map
