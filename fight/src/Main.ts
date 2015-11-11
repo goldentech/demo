@@ -157,6 +157,7 @@ class Main extends egret.DisplayObjectContainer {
                 egret.Tween.get(monster2).to({ scaleX: .95,scaleY: .95,alpha: .2 },250,egret.Ease.circIn).to({ scaleX: 1,scaleY: 1,alpha: 1 },250,egret.Ease.circIn);
             },
             this);  
+       
     }
 }
 
