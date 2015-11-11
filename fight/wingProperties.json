@@ -1,11 +1,10 @@
 {
 	"close":false,
-	"projectType":"egret",
 	"resourcePlugin":
 	{
 		"configs":[
 		{
-			"configPath":"resource/resource.json",
+			"configPath":"resource/default.res.json",
 			"relativePath":"resource/"
 		}],
 		"id":"org.egret-labs.resource",
@@ -29,15 +28,14 @@
 			},
 			{
 				"isFolder":false,
-				"key":"sword",
-				"name":"sword"
+				"key":"monster2",
+				"name":"monster2"
 			},
 			{
 				"isFolder":false,
-				"key":"monster2",
-				"name":"monster2"
+				"key":"sword",
+				"name":"sword"
 			}]
 		}
-	},
-	"theme":"resource/theme.thm"
+	}
 }

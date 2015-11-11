@@ -26,52 +26,39 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-
-class Main extends egret.DisplayObjectContainer {
-
-    /**
-     * 加载进度界面
-     * Process interface loading
-     */
-    private loadingView:LoadingUI;
-    // hit counter
-    private hits: number;
-
-
-    public constructor() {
-        super();
+var Main = (function (_super) {
+    __extends(Main, _super);
+    function Main() {
+        _super.call(this);
         this.addEventListener(egret.Event.ADDED_TO_STAGE, this.onAddToStage, this);
     }
-
-    private onAddToStage(event:egret.Event) {
+    var d = __define,c=Main;p=c.prototype;
+    p.onAddToStage = function (event) {
         //设置加载进度界面
         //Config to load process interface
         this.loadingView = new LoadingUI();
         this.stage.addChild(this.loadingView);
-
         //初始化Resource资源加载库
         //initiate Resource loading library
         RES.addEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.loadConfig("resource/default.res.json", "resource/");
-    }
-
+    };
     /**
      * 配置文件加载完成,开始预加载preload资源组。
      * configuration file loading is completed, start to pre-load the preload resource group
      */
-    private onConfigComplete(event:RES.ResourceEvent):void {
+    p.onConfigComplete = function (event) {
         RES.removeEventListener(RES.ResourceEvent.CONFIG_COMPLETE, this.onConfigComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.onResourceLoadError, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
         RES.loadGroup("obj");
-    }
-
+    };
     /**
      * preload资源组加载完成
      * Preload resource group is loaded
      */
-    private onResourceLoadComplete(event:RES.ResourceEvent):void {
+    p.onResourceLoadComplete = function (event) {
         if (event.groupName == "obj") {
             this.stage.removeChild(this.loadingView);
             RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.onResourceLoadComplete, this);
@@ -79,85 +66,77 @@ class Main extends egret.DisplayObjectContainer {
             RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.onResourceProgress, this);
             this.createGameScene();
         }
-    }
-
+    };
     /**
      * 资源组加载出错
      *  The resource group loading failed
      */
-    private onResourceLoadError(event:RES.ResourceEvent):void {
+    p.onResourceLoadError = function (event) {
         //TODO
         console.warn("Group:" + event.groupName + " has failed to load");
         //忽略加载失败的项目
         //Ignore the loading failed projects
         this.onResourceLoadComplete(event);
-    }
-
+    };
     /**
      * preload资源组加载进度
      * Loading process of preload resource group
      */
-    private onResourceProgress(event:RES.ResourceEvent):void {
+    p.onResourceProgress = function (event) {
         if (event.groupName == "obj") {
             this.loadingView.setProgress(event.itemsLoaded, event.itemsTotal);
         }
-    }
-
-    private textfield:egret.TextField;
-
+    };
     /**
      * 创建游戏场景
      * Create a game scene
      */
-    private createGameScene():void {
+    p.createGameScene = function () {
         this.hits = 0;
-        var bg: egret.Shape = new egret.Shape;
+        var bg = new egret.Shape;
         bg.graphics.beginFill(0x336699);
-        bg.graphics.drawRect(0,0,this.stage.stageWidth,this.stage.stageHeight);
+        bg.graphics.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight);
         bg.graphics.endFill();
         this.addChild(bg);
-        
         // add monster to scene
-        var monster: egret.Bitmap = new egret.Bitmap(RES.getRes("monster"));
+        var monster = new egret.Bitmap(RES.getRes("monster"));
         monster.x = 350;
         monster.y = 100;
         this.addChild(monster);
-        
         // add monster2 to scene
-        var monster2: egret.Bitmap = new egret.Bitmap(RES.getRes("monster2"));
+        var monster2 = new egret.Bitmap(RES.getRes("monster2"));
         monster2.x = 200;
         monster2.y = 300;
         this.addChild(monster2);
-        
         // add sword to scene
-        var sword: egret.Bitmap = new egret.Bitmap(RES.getRes("sword"));
+        var sword = new egret.Bitmap(RES.getRes("sword"));
         sword.x = 50;
         sword.y = 150;
         this.addChild(sword);
-        
         // touch event
         monster.touchEnabled = true;
         // Monster: change alpha filter and size when under attack, sword: move while touching monster
-        monster.addEventListener(egret.TouchEvent.TOUCH_TAP,function() { egret.Tween.get(sword).to({ x: 250 },30).to({ x: 50 },350); },this);
-        monster.addEventListener(egret.TouchEvent.TOUCH_TAP,function() { egret.Tween.get(monster).to({ scaleX: .95,scaleY: .95,alpha: .2 },250,egret.Ease.circIn).to({ scaleX: 1,scaleY: 1,alpha: 1 },250,egret.Ease.circIn); },this);
-
-
+        monster.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            egret.Tween.get(sword).to({ x: 250 }, 30).to({ x: 50 }, 350);
+        }, this);
+        monster.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            egret.Tween.get(monster).to({ scaleX: .95, scaleY: .95, alpha: .2 }, 250, egret.Ease.circIn).to({ scaleX: 1, scaleY: 1, alpha: 1 }, 250, egret.Ease.circIn);
+        }, this);
         monster2.touchEnabled = true;
-        monster2.addEventListener(egret.TouchEvent.TOUCH_TAP,function() { egret.Tween.get(sword).to({ x: 250,y: 340,rotation: 35 },30).to({ x: 50,y: 150,rotation: 0 },350); },this);
-        monster2.addEventListener(egret.TouchEvent.TOUCH_TAP,
-            function() {
-                this.hits++;
-                
-                // when hits equal to 4, monster disappear
-                if(this.hits == 4) {
-                    this.hits = 0;
-                    this.removeChild(monster2);
-                    return;
-                }
-                egret.Tween.get(monster2).to({ scaleX: .95,scaleY: .95,alpha: .2 },250,egret.Ease.circIn).to({ scaleX: 1,scaleY: 1,alpha: 1 },250,egret.Ease.circIn);
-            },
-            this);  
-    }
-}
-
-
+        monster2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            egret.Tween.get(sword).to({ x: 250, y: 340, rotation: 35 }, 30).to({ x: 50, y: 150, rotation: 0 }, 350);
+        }, this);
+        monster2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
+            this.hits++;
+            // when hits equal to 4, monster disappear
+            if (this.hits == 4) {
+                this.hits = 0;
+                this.removeChild(monster2);
+                return;
+            }
+            egret.Tween.get(monster2).to({ scaleX: .95, scaleY: .95, alpha: .2 }, 250, egret.Ease.circIn).to({ scaleX: 1, scaleY: 1, alpha: 1 }, 250, egret.Ease.circIn);
+        }, this);
+    };
+    return Main;
+})(egret.DisplayObjectContainer);
+egret.registerClass(Main,"Main");

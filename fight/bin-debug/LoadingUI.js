@@ -26,26 +26,24 @@
 //  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 //////////////////////////////////////////////////////////////////////////////////////
-
-class LoadingUI extends egret.Sprite {
-
-    public constructor() {
-        super();
+var LoadingUI = (function (_super) {
+    __extends(LoadingUI, _super);
+    function LoadingUI() {
+        _super.call(this);
         this.createView();
     }
-
-    private textField:egret.TextField;
-
-    private createView():void {
+    var d = __define,c=LoadingUI;p=c.prototype;
+    p.createView = function () {
         this.textField = new egret.TextField();
         this.addChild(this.textField);
         this.textField.y = 300;
         this.textField.width = 480;
         this.textField.height = 100;
         this.textField.textAlign = "center";
-    }
-
-    public setProgress(current, total):void {
+    };
+    p.setProgress = function (current, total) {
         this.textField.text = "Loading..." + current + "/" + total;
-    }
-}
+    };
+    return LoadingUI;
+})(egret.Sprite);
+egret.registerClass(LoadingUI,"LoadingUI");
