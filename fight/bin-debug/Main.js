@@ -150,10 +150,21 @@ var Main = (function (_super) {
     // draw a blood level bar
     p.drawProcessBar = function (x, y, value, target) {
         target.graphics.beginFill(0xffffff);
-        target.graphics.drawRect(x, y, 100, 15);
+        target.graphics.drawRect(x, y, 100, 10);
         target.graphics.endFill();
-        target.graphics.beginFill(0xff3300);
-        target.graphics.drawRect(x, y, value, 15);
+        // show green, yellow, red blood bar
+        var color;
+        if (value >= 75) {
+            color = 0x4CF64D;
+        }
+        else if (value > 25 && value < 75) {
+            color = 0xFFF851;
+        }
+        else {
+            color = 0xFF0017;
+        }
+        target.graphics.beginFill(color);
+        target.graphics.drawRect(x, y, value, 10);
         target.graphics.endFill();
         this.addChild(target);
     };
