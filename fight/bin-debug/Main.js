@@ -93,6 +93,8 @@ var Main = (function (_super) {
      */
     p.createGameScene = function () {
         this.hits = 0;
+        // monster2 blood level
+        this.value2 = 100;
         var bg = new egret.Shape;
         bg.graphics.beginFill(0x336699);
         bg.graphics.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight);
@@ -108,6 +110,9 @@ var Main = (function (_super) {
         monster2.x = 200;
         monster2.y = 300;
         this.addChild(monster2);
+        // addd blood level bar for monster2
+        var bar2 = new egret.Shape;
+        this.drawProcessBar(this.stage.stageWidth - 190, 280, 100, bar2);
         // add sword to scene
         var sword = new egret.Bitmap(RES.getRes("sword"));
         sword.x = 50;
@@ -128,14 +133,29 @@ var Main = (function (_super) {
         }, this);
         monster2.addEventListener(egret.TouchEvent.TOUCH_TAP, function () {
             this.hits++;
+            // adjust blood level
+            this.value2 = this.value2 - 25;
+            this.drawProcessBar(this.stage.stageWidth - 190, 280, this.value2, bar2);
             // when hits equal to 4, monster disappear
             if (this.hits == 4) {
                 this.hits = 0;
+                // remove child and clean up
                 this.removeChild(monster2);
+                this.removeChild(bar2);
                 return;
             }
             egret.Tween.get(monster2).to({ scaleX: .95, scaleY: .95, alpha: .2 }, 250, egret.Ease.circIn).to({ scaleX: 1, scaleY: 1, alpha: 1 }, 250, egret.Ease.circIn);
         }, this);
+    };
+    // draw a blood level bar
+    p.drawProcessBar = function (x, y, value, target) {
+        target.graphics.beginFill(0xffffff);
+        target.graphics.drawRect(x, y, 100, 15);
+        target.graphics.endFill();
+        target.graphics.beginFill(0xff3300);
+        target.graphics.drawRect(x, y, value, 15);
+        target.graphics.endFill();
+        this.addChild(target);
     };
     return Main;
 })(egret.DisplayObjectContainer);

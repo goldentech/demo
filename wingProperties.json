@@ -1,0 +1,12 @@
+{
+	"close":true,
+	"resourcePlugin":
+	{
+		"configs":[],
+		"id":"org.egret-labs.resource",
+		"library":
+		{
+			
+		}
+	}
+}
